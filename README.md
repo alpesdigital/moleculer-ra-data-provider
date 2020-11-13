@@ -1,2 +1,2 @@
 # moleculer-ra-data-provider
-Moleculer data provider for react-admin
+[Moleculer](https://moleculer.services) data provider for [React Admin](https://marmelab.com/react-admin/)

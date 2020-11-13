@@ -1,0 +1,55 @@
+{
+  "name": "moleculer-ra-data-provider",
+  "version": "0.9.0",
+  "description": "Moleculer data provider for react-admin",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "babel ./src -d ./build",
+    "lint": "eslint ./src",
+    "prepublishOnly": "npm run build",
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "transform": {
+      ".js": "<rootDir>/node_modules/babel-jest"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpesdigital/moleculer-ra-data-provider"
+  },
+  "keywords": [
+    "microservices",
+    "react-admin",
+    "moleculer",
+    "moleculer.services",
+    "data",
+    "provider",
+    "javascript",
+    "api",
+    "client"
+  ],
+  "author": "Alpes Digital <contact@alpesdigital.com>",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/alpesdigital/moleculer-ra-data-provider/issues"
+  },
+  "homepage": "https://github.com/alpesdigital/moleculer-ra-data-provider/blob/main/README.md",
+  "dependencies": {
+    "query-string": "^6.8.3"
+  },
+  "peerDependencies": {
+    "ra-core": "^2.9.7"
+  },
+  "devDependencies": {
+    "test": "jest --coverage",
+    "eslint": "^6.1.0",
+    "jest": "^24.8.0",
+    "jest-cli": "^24.8.0",
+    "jest-extended": "^0.11.5",
+    "eslint-plugin-jest": "^22.20.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-jest": "^24.9.0"
+  }
+}
