@@ -1,7 +1,7 @@
 import { fetchUtils, UPDATE_MANY, DELETE_MANY } from "ra-core"
 
-import convertRequest from "./convertRequest"
-import convertResponse from "./convertResponse"
+const  convertRequest = require("./convertRequest").convertRequest;
+const  convertResponse = require("./convertResponse");
 
 /**
  * Maps react-admin queries to a simple REST API

@@ -1,5 +1,7 @@
-import { stringify } from 'query-string'
-import { GET_LIST, GET_ONE, GET_MANY, GET_MANY_REFERENCE, CREATE, UPDATE, DELETE } from "ra-core"
+// import { stringify } from 'query-string'
+const stringify = require("query-string").stringify;
+const RA_CORE=require("ra-core");
+// import { GET_LIST, GET_ONE, GET_MANY, GET_MANY_REFERENCE, CREATE, UPDATE, DELETE } from "ra-core"
 
 const sort = (field, order) => order === "ASC" ? "-".concat(field) : field;
 
@@ -12,12 +14,14 @@ const create = (params, apiUrl, resource) => ({
   }
 });
 
-const deleteRequest = (params, apiUrl, resource) => ({
-  url: `${apiUrl}/${resource}/${params.id}`,
-  options: {
-    method: "DELETE"
-  },
-});
+function deleteRequest(params, apiUrl, resource){
+  return {
+    url: `${apiUrl}/${resource}/${params.id}`,
+    options: {
+      method: "DELETE"
+    }
+  }
+};
 
 const getList = (params, apiUrl, resource) => {
   const { page, perPage } = params.pagination
@@ -90,28 +94,28 @@ const convertRequest = (apiUrl, type, resource, params) => {
     options: {}
   }
   switch (type) {
-    case GET_LIST: {
+    case RA_CORE.GET_LIST: {
       httpRequest.url = getList(params, apiUrl, resource)
       break
     }
-    case GET_ONE:
+    case RA_CORE.GET_ONE:
       httpRequest.url = getOne(params, apiUrl, resource)
       break
-    case GET_MANY: {
+    case RA_CORE.GET_MANY: {
       httpRequest.url = getMany(params, apiUrl, resource)
       break
     }
-    case GET_MANY_REFERENCE: {
+    case RA_CORE.GET_MANY_REFERENCE: {
       httpRequest.url = getManyReference(params, apiUrl, resource)
       break
     }
-    case UPDATE:
+    case RA_CORE.UPDATE:
       httpRequest = update(params, apiUrl, resource)
       break
-    case CREATE:
+    case RA_CORE.CREATE:
       httpRequest = create(params, apiUrl, resource)
       break
-    case DELETE:
+    case RA_CORE.DELETE:
       httpRequest = deleteRequest(params, apiUrl, resource)
       break
     default:
@@ -120,4 +124,9 @@ const convertRequest = (apiUrl, type, resource, params) => {
   return httpRequest
 }
 
-export default convertRequest
+
+module.exports = {
+  convertRequest,
+  deleteRequest,
+  create,
+}
