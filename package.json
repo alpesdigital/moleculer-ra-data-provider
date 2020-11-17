@@ -56,6 +56,5 @@
     "eslint-plugin-jest": "^22.20.0",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
-    "react": "^17.0.1"
   }
 }
