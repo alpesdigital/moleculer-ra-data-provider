@@ -12,7 +12,7 @@ const create = (params, apiUrl, resource) => ({
   }
 });
 
-const deleteRequest = (params, apiUrl, resource) => ({
+const deleteOne = (params, apiUrl, resource) => ({
   url: `${apiUrl}/${resource}/${params.id}`,
   options: {
     method: "DELETE"
@@ -122,7 +122,7 @@ const convertRequest = (apiUrl, type, resource, params) => {
       httpRequest = update(params, apiUrl, resource)
       break
     case RA_CORE.DELETE:
-      httpRequest = deleteRequest(params, apiUrl, resource)
+      httpRequest = deleteOne(params, apiUrl, resource)
       break
     default:
       throw new Error(`Unsupported fetch action type ${type}`)
@@ -133,7 +133,7 @@ const convertRequest = (apiUrl, type, resource, params) => {
 
 module.exports = {
   convertRequest,
-  deleteRequest,
+  deleteOne,
   create,
   getList,
   getMany,

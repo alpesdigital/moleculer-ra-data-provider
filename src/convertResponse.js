@@ -1,4 +1,4 @@
-import { GET_LIST, GET_MANY_REFERENCE, CREATE, DELETE_MANY } from "ra-core"
+const RA_CORE=require("ra-core");
 
 /**
  * @param {Object} response HTTP response from fetch()
@@ -10,20 +10,24 @@ import { GET_LIST, GET_MANY_REFERENCE, CREATE, DELETE_MANY } from "ra-core"
 const convertResponse = (response, type, resource, params) => {
   const { json } = response
   switch (type) {
-    case GET_LIST:
-    case GET_MANY_REFERENCE:
+    case RA_CORE.GET_LIST:
+    case RA_CORE.GET_MANY_REFERENCE:
       return {
-        data: json,
-        total: json.length
+        data: json.rows,
+        total: json.rows.length
+        // TODO pagination info if any ???
       }
-    case CREATE:
+    case RA_CORE.CREATE:
       return { data: { ...params.data, id: json.id } }
-    case DELETE_MANY: {
+
+    case RA_CORE.DELETE_MANY:
       return { data: json || [] }
-    }
+
     default:
       return { data: json }
   }
 }
 
-export default convertResponse
+module.exports = {
+  convertResponse
+}

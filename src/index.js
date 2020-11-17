@@ -1,7 +1,7 @@
-import { fetchUtils, UPDATE_MANY, DELETE_MANY } from "ra-core"
+import { fetchUtils, UPDATE_MANY, DELETE_MANY } from 'ra-core'
 
-const  convertRequest = require("./convertRequest").convertRequest;
-const  convertResponse = require("./convertResponse");
+const convertRequest = require('./convertRequest').convertRequest;
+const convertResponse = require('./convertResponse').convertResponse;
 
 /**
  * Maps react-admin queries to a simple REST API
@@ -29,7 +29,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
       const responses = await Promise.all(
         params.ids.map(id =>
           httpClient(`${apiUrl}/${resource}/${id}`, {
-            method: "PUT",
+            method: 'PUT',
             body: JSON.stringify(params.data)
           })
         )
@@ -41,7 +41,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
       const responses = await Promise.all(
         params.ids.map(id =>
           httpClient(`${apiUrl}/${resource}/${id}`, {
-            method: "DELETE"
+            method: 'DELETE'
           })
         )
       )
