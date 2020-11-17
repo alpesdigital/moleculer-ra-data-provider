@@ -1,6 +1,7 @@
 'use strict'
 
 const CONVERT_REQUEST = require("../src/convertRequest")
+const RA_CORE=require("ra-core");
 
 const API_URL = "http://dummy.api.url/"
 const RESOURCE = 'dummyResource'
@@ -133,7 +134,6 @@ describe('CONVERT_REQUEST', () => {
       method: 'PUT'
     })
   })
-
   it('sort', function () {
     expect(CONVERT_REQUEST.sort('fieldName', 'ASC')).toEqual('-fieldName')
     // to bad, case dependant, is it normal
@@ -141,4 +141,12 @@ describe('CONVERT_REQUEST', () => {
     expect(CONVERT_REQUEST.sort('fieldName', 'DESC')).toEqual('fieldName')
     expect(CONVERT_REQUEST.sort('fieldName', 'AnyOtherText')).toEqual('fieldName')
   })
+
+  it('convertRequest', function () {
+    const { url, options } = CONVERT_REQUEST.convertRequest(API_URL, RA_CORE.GET_ONE, RESOURCE, { id: 1234})
+    expect(url).toEqual(API_URL + '/' + RESOURCE + '/' + '1234')
+    expect(options).toStrictEqual({})
+  })
+
+
 })

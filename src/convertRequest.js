@@ -107,7 +107,7 @@ const convertRequest = (apiUrl, type, resource, params) => {
       httpRequest = create(params, apiUrl, resource)
       break
     case RA_CORE.GET_ONE:
-      httpRequest.url = getOne(params, apiUrl, resource)
+      httpRequest = getOne(params, apiUrl, resource)
       break
     case RA_CORE.GET_LIST:
       httpRequest = getList(params, apiUrl, resource)
