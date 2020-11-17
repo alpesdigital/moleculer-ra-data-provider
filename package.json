@@ -1,6 +1,6 @@
 {
   "name": "moleculer-ra-data-provider",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Moleculer.services data provider for react-admin",
   "main": "build/index.js",
   "scripts": {
