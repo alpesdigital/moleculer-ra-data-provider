@@ -1,7 +1,7 @@
 'use strict'
 
-const CONVERT_REQUEST = require("../src/convertRequest")
-const RA_CORE=require("ra-core");
+import CONVERT_REQUEST from '../src/convertRequest'
+import { GET_ONE }  from 'ra-core'
 
 const API_URL = "http://dummy.api.url/"
 const RESOURCE = 'dummyResource'
@@ -143,7 +143,7 @@ describe('CONVERT_REQUEST', () => {
   })
 
   it('convertRequest', function () {
-    const { url, options } = CONVERT_REQUEST.convertRequest(API_URL, RA_CORE.GET_ONE, RESOURCE, { id: 1234})
+    const { url, options } = CONVERT_REQUEST.convertRequest(API_URL, GET_ONE, RESOURCE, { id: 1234})
     expect(url).toEqual(API_URL + '/' + RESOURCE + '/' + '1234')
     expect(options).toStrictEqual({})
   })

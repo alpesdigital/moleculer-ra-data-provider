@@ -1,5 +1,5 @@
-const stringify = require("query-string").stringify;
-const RA_CORE=require("ra-core");
+import { stringify } from 'query-string'
+import { GET_ONE, DELETE, GET_MANY, UPDATE, GET_MANY_REFERENCE, CREATE, GET_LIST } from 'ra-core'
 
 const sort = (field, order) => order === "ASC" ? "-".concat(field) : field;
 
@@ -102,26 +102,27 @@ const convertRequest = (apiUrl, type, resource, params) => {
     url: "",
     options: {}
   }
+
   switch (type) {
-    case RA_CORE.CREATE:
+    case CREATE:
       httpRequest = create(params, apiUrl, resource)
       break
-    case RA_CORE.GET_ONE:
+    case GET_ONE:
       httpRequest = getOne(params, apiUrl, resource)
       break
-    case RA_CORE.GET_LIST:
+    case GET_LIST:
       httpRequest = getList(params, apiUrl, resource)
       break
-    case RA_CORE.GET_MANY:
+    case GET_MANY:
       httpRequest = getMany(params, apiUrl, resource)
       break
-    case RA_CORE.GET_MANY_REFERENCE:
+    case GET_MANY_REFERENCE:
       httpRequest = getManyReference(params, apiUrl, resource)
       break
-    case RA_CORE.UPDATE:
+    case UPDATE:
       httpRequest = update(params, apiUrl, resource)
       break
-    case RA_CORE.DELETE:
+    case DELETE:
       httpRequest = deleteOne(params, apiUrl, resource)
       break
     default:
