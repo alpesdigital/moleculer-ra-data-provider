@@ -1,7 +1,5 @@
-// import { stringify } from 'query-string'
 const stringify = require("query-string").stringify;
 const RA_CORE=require("ra-core");
-// import { GET_LIST, GET_ONE, GET_MANY, GET_MANY_REFERENCE, CREATE, UPDATE, DELETE } from "ra-core"
 
 const sort = (field, order) => order === "ASC" ? "-".concat(field) : field;
 
@@ -14,14 +12,12 @@ const create = (params, apiUrl, resource) => ({
   }
 });
 
-function deleteRequest(params, apiUrl, resource){
-  return {
-    url: `${apiUrl}/${resource}/${params.id}`,
-    options: {
-      method: "DELETE"
-    }
+const deleteRequest = (params, apiUrl, resource) => ({
+  url: `${apiUrl}/${resource}/${params.id}`,
+  options: {
+    method: "DELETE"
   }
-};
+});
 
 const getList = (params, apiUrl, resource) => {
   const { page, perPage } = params.pagination
@@ -42,7 +38,10 @@ const getList = (params, apiUrl, resource) => {
   }
 
   request.query = JSON.stringify(query)
-  return `${apiUrl}/${resource}?${stringify(request)}`
+  return {
+    url: `${apiUrl}/${resource}?${stringify(request)}`,
+    options: {}
+  }
 };
 
 
@@ -51,7 +50,10 @@ const getMany = (params, apiUrl, resource) => {
   const query = {
     filter: JSON.stringify({ id: params.ids })
   }
-  return `${apiUrl}/${resource}?${stringify(query)}`
+  return {
+    url: `${apiUrl}/${resource}?${stringify(query)}`,
+    options: {}
+  }
 }
 
 
@@ -67,10 +69,17 @@ const getManyReference = (params, apiUrl, resource) => {
       [params.target]: params.id
     })
   }
-  return `${apiUrl}/${resource}?${stringify(query)}`
+  return {
+    url:`${apiUrl}/${resource}?${stringify(query)}`,
+    options: {}
+  }
 };
 
-const getOne = (params, apiUrl, resource) => `${apiUrl}/${resource}/${params.id}`;
+const getOne = (params, apiUrl, resource) => ({
+  url:`${apiUrl}/${resource}/${params.id}`,
+  options: {}
+});
+
 
 const update = (params, apiUrl, resource) => ({
   url: `${apiUrl}/${resource}/${params.id}`,
@@ -94,26 +103,23 @@ const convertRequest = (apiUrl, type, resource, params) => {
     options: {}
   }
   switch (type) {
-    case RA_CORE.GET_LIST: {
-      httpRequest.url = getList(params, apiUrl, resource)
+    case RA_CORE.CREATE:
+      httpRequest = create(params, apiUrl, resource)
       break
-    }
     case RA_CORE.GET_ONE:
       httpRequest.url = getOne(params, apiUrl, resource)
       break
-    case RA_CORE.GET_MANY: {
-      httpRequest.url = getMany(params, apiUrl, resource)
+    case RA_CORE.GET_LIST:
+      httpRequest = getList(params, apiUrl, resource)
       break
-    }
-    case RA_CORE.GET_MANY_REFERENCE: {
-      httpRequest.url = getManyReference(params, apiUrl, resource)
+    case RA_CORE.GET_MANY:
+      httpRequest = getMany(params, apiUrl, resource)
       break
-    }
+    case RA_CORE.GET_MANY_REFERENCE:
+      httpRequest = getManyReference(params, apiUrl, resource)
+      break
     case RA_CORE.UPDATE:
       httpRequest = update(params, apiUrl, resource)
-      break
-    case RA_CORE.CREATE:
-      httpRequest = create(params, apiUrl, resource)
       break
     case RA_CORE.DELETE:
       httpRequest = deleteRequest(params, apiUrl, resource)
@@ -129,4 +135,10 @@ module.exports = {
   convertRequest,
   deleteRequest,
   create,
+  getList,
+  getMany,
+  getManyReference,
+  getOne,
+  update,
+  sort
 }
