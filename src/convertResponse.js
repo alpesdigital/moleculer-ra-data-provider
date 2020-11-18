@@ -1,4 +1,4 @@
-import { GET_LIST, DELETE_MANY, GET_MANY_REFERENCE, CREATE } from 'ra-core'
+import { GET_LIST, DELETE_MANY, GET_MANY_REFERENCE, CREATE } from './const'
 
 /**
  * @param {Object} response HTTP response from fetch()

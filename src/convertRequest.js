@@ -1,5 +1,6 @@
 import { stringify } from 'query-string'
-import { GET_ONE, DELETE, GET_MANY, UPDATE, GET_MANY_REFERENCE, CREATE, GET_LIST } from 'ra-core'
+import { GET_ONE, DELETE, GET_MANY, UPDATE, GET_MANY_REFERENCE, CREATE, GET_LIST } from './const'
+
 
 const sort = (field, order) => order === "ASC" ? "-".concat(field) : field;
 

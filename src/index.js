@@ -1,4 +1,5 @@
-import { fetchUtils, UPDATE_MANY, DELETE_MANY } from 'ra-core'
+import { fetchUtils } from 'ra-core'
+import { UPDATE_MANY, DELETE_MANY } from 'const'
 
 import { convertRequest } from './convertRequest'
 import { convertResponse } from './convertResponse'

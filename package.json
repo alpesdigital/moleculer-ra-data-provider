@@ -1,21 +1,18 @@
 {
   "name": "moleculer-ra-data-provider",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "Moleculer.services data provider for react-admin",
   "main": "build/index.js",
   "scripts": {
     "build": "babel ./src -d ./build",
     "prepublishOnly": "npm run build",
-    "lint": "eslint --ext=.js src test",
-    "ci": "jest --watch",
-    "test": "jest --coverage"
+    "lint": "eslint --ext=.js src",
+    "test": "jest --coverage src"
   },
   "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/services/"
-    ]
+    "transform": {
+      ".js": "<rootDir>/node_modules/babel-jest"
+    }
   },
   "repository": {
     "type": "git",
@@ -39,10 +36,12 @@
   },
   "homepage": "https://github.com/alpesdigital/moleculer-ra-data-provider#readme",
   "dependencies": {
-    "query-string": "^6.8.3",
-    "ra-core": "^2.9.7"
+    "babel-jest": "^26.6.3",
+    "query-string": "^6.13.7"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "ra-core": "^2.9.9"
+  },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
@@ -54,7 +53,6 @@
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^22.20.0",
-    "jest": "^24.8.0",
-    "jest-cli": "^24.8.0"
+    "jest": "^24.8.0"
   }
 }
