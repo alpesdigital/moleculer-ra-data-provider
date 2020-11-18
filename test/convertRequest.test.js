@@ -1,6 +1,5 @@
 'use strict'
 // TODO build or src selector
-SOURCE_DIR
 import CONVERT_REQUEST from '../build/convertRequest'
 import { GET_ONE }  from 'ra-core'
 
