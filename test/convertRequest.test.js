@@ -1,6 +1,7 @@
 'use strict'
-
-import CONVERT_REQUEST from '../src/convertRequest'
+// TODO build or src selector
+SOURCE_DIR
+import CONVERT_REQUEST from '../build/convertRequest'
 import { GET_ONE }  from 'ra-core'
 
 const API_URL = "http://dummy.api.url/"

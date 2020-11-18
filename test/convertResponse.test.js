@@ -1,5 +1,6 @@
 "use strict";
-import CONVERT_RESPONSE from '../src/convertResponse'
+// TODO build or src selector
+import CONVERT_RESPONSE from '../build/convertResponse'
 import  { GET_LIST, DELETE_MANY, CREATE, GET_ONE } from 'ra-core'
 
 describe("CONVERT_RESPONSE", () => {
