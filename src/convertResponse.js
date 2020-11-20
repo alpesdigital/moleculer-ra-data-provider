@@ -1,4 +1,29 @@
-import { GET_LIST, DELETE_MANY, GET_MANY_REFERENCE, CREATE } from './const'
+import { CREATE, DELETE_MANY, GET_LIST, GET_MANY, GET_MANY_REFERENCE } from './const'
+
+/**
+ *
+ * @param {[Object]} jsonResults: rows of result with an "_id" field (moleculer.services default id name)
+ * @returns {[Object]} these rows with a new id field (react admin default id name), copy of _id
+ *
+ */
+function convertIdFields (jsonResults) {
+  return jsonResults.map(e => ({ id: e._id, ...e }))
+}
+
+/**
+ *
+ * @param {Object} object with an "_id" field (moleculer.services default id name)
+ * @returns {Object} these rows with a new id field (react admin default id name), copy of _id
+ *
+ */
+function convertIdField (data) {
+  // already an id or no _id : stay as-is
+  if (data.id !== undefined || data._id === undefined)
+    return data
+  // add _id = id
+  return { id: data._id, ...data }
+}
+
 
 /**
  * @param {Object} response HTTP response from fetch()
@@ -14,12 +39,19 @@ const convertResponse = (response, type, resource, params) => {
     case GET_LIST:
     case GET_MANY_REFERENCE:
       return {
-        data: json.rows,
-        total: json.rows.length
-        // TODO pagination info if any ???
+        data : convertIdFields(json.rows),
+        total: json.total
+        // validUntil not used
+      }
+
+    case GET_MANY:
+      return {
+        data : convertIdFields(json.rows),
+        // no total in this case
       }
     case CREATE:
-      return { data: { ...params.data, id: json.id } }
+      // why params, all is in json !!      return { data: { ...params.data, id: json.id } }
+      return { data: convertIdField(json)}
 
     case DELETE_MANY:
       return { data: json || [] }
