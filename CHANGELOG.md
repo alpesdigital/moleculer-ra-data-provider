@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.3.1
+* Coming soon
+
 ## v1.3.0
 * Added CHANGELOG
 * **`_id`** (moleculer's id name) automatically duplicated as **`id`** (React-Admin's id name) in *GetCreate*, *GetList* and *GetManyReference* results
