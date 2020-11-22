@@ -2,10 +2,10 @@ import { stringify } from 'query-string'
 import { GET_ONE, DELETE, GET_MANY, UPDATE, GET_MANY_REFERENCE, CREATE, GET_LIST } from './const'
 
 
-const sort = (field, order) => order === "ASC" ? "-".concat(field) : field;
+export const sort = (field, order) => order === "ASC" ? "-".concat(field) : field;
 
 
-const create = (params, apiUrl, resource) => ({
+export const createOne = (params, apiUrl, resource) => ({
   url: `${apiUrl}/${resource}`,
   options: {
     method: "POST",
@@ -13,14 +13,14 @@ const create = (params, apiUrl, resource) => ({
   }
 });
 
-const deleteOne = (params, apiUrl, resource) => ({
+export const deleteOne = (params, apiUrl, resource) => ({
   url: `${apiUrl}/${resource}/${params.id}`,
   options: {
     method: "DELETE"
   }
 });
 
-const getList = (params, apiUrl, resource) => {
+export const getList = (params, apiUrl, resource) => {
   const { page, perPage } = params.pagination
   const { field, order } = params.sort
   const { search } = params.filter
@@ -47,7 +47,7 @@ const getList = (params, apiUrl, resource) => {
 
 
 
-const getMany = (params, apiUrl, resource) => {
+export const getMany = (params, apiUrl, resource) => {
   const query = {
     filter: JSON.stringify({ id: params.ids })
   }
@@ -58,7 +58,7 @@ const getMany = (params, apiUrl, resource) => {
 }
 
 
-const getManyReference = (params, apiUrl, resource) => {
+export const getManyReference = (params, apiUrl, resource) => {
   const { page, perPage } = params.pagination
   const { field, order } = params.sort
   const query = {
@@ -76,13 +76,13 @@ const getManyReference = (params, apiUrl, resource) => {
   }
 };
 
-const getOne = (params, apiUrl, resource) => ({
+export const getOne = (params, apiUrl, resource) => ({
   url:`${apiUrl}/${resource}/${params.id}`,
   options: {}
 });
 
 
-const update = (params, apiUrl, resource) => ({
+export const updateOne = (params, apiUrl, resource) => ({
   url: `${apiUrl}/${resource}/${params.id}`,
   options: {
     method: "PUT",
@@ -98,7 +98,7 @@ const update = (params, apiUrl, resource) => ({
  * @param {object} params The data request params, depending on the type
  * @returns {object} { url, options } The HTTP request parameters
  */
-const convertRequest = (apiUrl, type, resource, params) => {
+export const convertRequest = (apiUrl, type, resource, params) => {
   let httpRequest = {
     url: "",
     options: {}
@@ -106,7 +106,7 @@ const convertRequest = (apiUrl, type, resource, params) => {
 
   switch (type) {
     case CREATE:
-      httpRequest = create(params, apiUrl, resource)
+      httpRequest = createOne(params, apiUrl, resource)
       break
     case GET_ONE:
       httpRequest = getOne(params, apiUrl, resource)
@@ -121,7 +121,7 @@ const convertRequest = (apiUrl, type, resource, params) => {
       httpRequest = getManyReference(params, apiUrl, resource)
       break
     case UPDATE:
-      httpRequest = update(params, apiUrl, resource)
+      httpRequest = updateOne(params, apiUrl, resource)
       break
     case DELETE:
       httpRequest = deleteOne(params, apiUrl, resource)
@@ -132,15 +132,3 @@ const convertRequest = (apiUrl, type, resource, params) => {
   return httpRequest
 }
 
-
-module.exports = {
-  convertRequest,
-  deleteOne,
-  create,
-  getList,
-  getMany,
-  getManyReference,
-  getOne,
-  update,
-  sort
-}

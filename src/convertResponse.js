@@ -32,7 +32,7 @@ function convertIdField (data) {
  * @param {Object} params The data request params, depending on the type
  * @returns {Object} Data response
  */
-const convertResponse = (response, type, resource, params) => {
+export const convertResponse = (response, type, resource, params) => {
   const { json } = response
 
   switch (type) {
@@ -63,6 +63,3 @@ const convertResponse = (response, type, resource, params) => {
   }
 }
 
-module.exports = {
-  convertResponse
-}

@@ -6,8 +6,8 @@
   "scripts": {
     "build": "babel ./src -d ./build",
     "prepublishOnly": "npm run build",
-    "lint": "eslint --ext=.js src",
-    "test": "jest --coverage src"
+    "lint": "eslint --ext=.js src test",
+    "test": "jest --coverage test"
   },
   "jest": {
     "transform": {
@@ -36,7 +36,6 @@
   },
   "homepage": "https://github.com/alpesdigital/moleculer-ra-data-provider#readme",
   "dependencies": {
-    "babel-jest": "^26.6.3",
     "query-string": "^6.13.7"
   },
   "peerDependencies": {
@@ -48,6 +47,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-flowtype": "^5.2.0",
