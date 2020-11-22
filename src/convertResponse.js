@@ -7,7 +7,7 @@ import { CREATE, DELETE_MANY, GET_LIST, GET_MANY, GET_MANY_REFERENCE } from './c
  *
  */
 function convertIdFields (jsonResults) {
-  return jsonResults.map(e => ({ id: e._id, ...e }))
+  return Array.isArray(jsonResults) ? jsonResults.map(e => convertIdField(e)) : []
 }
 
 /**
@@ -49,15 +49,17 @@ const convertResponse = (response, type, resource, params) => {
         data : convertIdFields(json.rows),
         // no total in this case
       }
-    case CREATE:
-      // why params, all is in json !!      return { data: { ...params.data, id: json.id } }
-      return { data: convertIdField(json)}
+
+    // case CREATE:
+    //   // why params, all is in json !!      return { data: { ...params.data, id: json.id } }
+    //   return { data: convertIdField(json)}
 
     case DELETE_MANY:
-      return { data: json || [] }
+      return { data: convertIdFields(json) }
 
+      // get_one, delete, update, create
     default:
-      return { data: json }
+      return { data: convertIdField(json) }
   }
 }
 

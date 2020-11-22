@@ -12,20 +12,19 @@ describe("CONVERT_RESPONSE", () => {
 	const EMPTY_PARAMS= {  } ;
 
 	// moleculer responses for list, many and many format has the same format
+  const RESPONSE_ONE = { json:  { _id: "id1234", info: "dummyData"  }}
   const RESPONSE_MANY = { json: { rows: [ {_id:1, row: "row1"},{_id:2, row: "row2"},{_id:3, row: "row3"} ], total:10, page:1, pageSize: 3 }}
   const CONVERTED_REPONSE_MANY = { data: [{id:1, _id:1,  row: "row1"},{id:2, _id:2, row: "row2"},{id:3, _id:3, row: "row3"}], total: 10}
 
 
   it("convertResponse simple", function() {
-	  const response = { json: { id: "id1234", dummy: "data"  }};
-    let convert = CONVERT_RESPONSE.convertResponse( response, GET_ONE, RESOURCE, EMPTY_PARAMS );
-    expect(convert.data).toStrictEqual({"id": "id1234", dummy: "data"});
+    let convert = CONVERT_RESPONSE.convertResponse( RESPONSE_ONE, GET_ONE, RESOURCE, EMPTY_PARAMS );
+    expect(convert.data).toStrictEqual({"_id": "id1234","id": "id1234", info: "dummyData"});
 	});
 
 	it("convertResponse create", function() {
-	  const response = { json: { _id: "id1234", info: "dummyDataResponse"   }};
-    let convert = CONVERT_RESPONSE.convertResponse( response, CREATE, RESOURCE, PARAMS );
-    expect(convert.data).toStrictEqual({"_id": "id1234","id": "id1234", "info": "dummyDataResponse"});
+    let convert = CONVERT_RESPONSE.convertResponse( RESPONSE_ONE, CREATE, RESOURCE, PARAMS );
+    expect(convert.data).toStrictEqual({"_id": "id1234","id": "id1234", "info": "dummyData"});
 	});
 
 	it("convertResponse get_list", function() {
@@ -51,9 +50,9 @@ describe("CONVERT_RESPONSE", () => {
   });
 
   it("convertResponse deleteMany", function() {
-    const response = { json: { id: "id1234"  }};
+    const response = { json: [ { _id: "id1234"  }, { _id: "id12345"  } ]};
     let convert = CONVERT_RESPONSE.convertResponse( response, DELETE_MANY, RESOURCE, EMPTY_PARAMS );
-    expect(convert.data).toStrictEqual({"id": "id1234"});
+    expect(convert.data).toStrictEqual([{"_id": "id1234","id": "id1234"},{"_id": "id12345","id": "id12345"}]);
 
     const responseEmpty = {  };
     convert = CONVERT_RESPONSE.convertResponse( responseEmpty, DELETE_MANY, RESOURCE, EMPTY_PARAMS );
@@ -61,7 +60,7 @@ describe("CONVERT_RESPONSE", () => {
 
     const responseJsonEmpty = {  json: {} };
     convert = CONVERT_RESPONSE.convertResponse( responseJsonEmpty, DELETE_MANY, RESOURCE, EMPTY_PARAMS );
-    expect(convert.data).toStrictEqual({}); // TODO correct ???
+    expect(convert.data).toStrictEqual([]);
   });
 
 });
