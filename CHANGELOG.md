@@ -1,8 +1,8 @@
 # Changelog
 
 ## v1.3.1
-* Fix **`_id`** to **`id`** duplication 
 * removed babel-jest from dependencies
+* Fix **`_id`** to **`id`** duplication 
 
 ## v1.3.0
 * Added CHANGELOG
