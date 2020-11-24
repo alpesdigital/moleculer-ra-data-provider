@@ -1,6 +1,9 @@
 # moleculer-ra-data-provider 
 [![Build Status](https://travis-ci.org/alpesdigital/moleculer-ra-data-provider.svg?branch=main)](https://travis-ci.org/alpesdigital/moleculer-ra-data-provider) 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falpesdigital%2Fmoleculer-ra-data-provider.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Falpesdigital%2Fmoleculer-ra-data-provider?ref=badge_shield)
+![NPM](https://img.shields.io/npm/v/moleculer-ra-data-provider.svg?maxAge=3600)
+![NPM Downloads](https://img.shields.io/npm/dw/moleculer-ra-data-provider)
+
 
 A [Moleculer](https://moleculer.services) compatible data provider for [React Admin](https://marmelab.com/react-admin/).
 
