@@ -17,7 +17,8 @@ import { convertResponse } from './convertResponse'
  * CREATE       => POST http://my.api.url/posts
  * DELETE       => DELETE http://my.api.url/posts/123
  */
-export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
+export default (apiUrl, userOptions = {},  httpClient = fetchUtils.fetchJson) => {
+
   /**
    * @param {string} type Request type, e.g GET_LIST
    * @param {string} resource Resource name, e.g. "posts"
@@ -52,6 +53,6 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
     const { url, options } = convertRequest(apiUrl, type, resource, params)
 
     const response = await httpClient(url, options)
-    return convertResponse(response, type, resource, params)
+    return convertResponse(response, type, resource, params, userOptions)
   }
 }

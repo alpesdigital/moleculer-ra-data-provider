@@ -46,7 +46,7 @@ import { ListGuesser } from 'react-admin'; // example
 
 import moleculerDataProvider from 'moleculer-ra-data-provider';
 
-const dataProvider = moleculerDataProvider('http://localhost:3000/api');
+const dataProvider = moleculerDataProvider('http://localhost:13000/api');
 
 const App = () => (
   <Admin dashboard={Dashboard} dataProvider={dataProvider}>
@@ -56,6 +56,20 @@ const App = () => (
 );
 
 export default App;
+```
+## Options
+
+You can specify the  **`_id`** field name (duplicated as  **`id`** for react-admin) for some/all resources
+
+Example 1: the moleculer service 'orders' is using **`uuid`** instead of **`_id`**
+```javascript
+//in app.js
+const dataProvider = moleculerDataProvider('http://localhost:13000/api', {idFields: {"orders": "uuid" }});
+```
+Example 2: the moleculer service 'orders' is using **`uuid`** instead of **`_id`**, others are using  **`myId`**
+```javascript
+//in app.js
+const dataProvider = moleculerDataProvider('http://localhost:13000/api', {idFields: {"orders": "uuid", "DEFAULT": "myId"  }});
 ```
 
 ## Licence

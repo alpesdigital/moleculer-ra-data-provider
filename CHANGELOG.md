@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.0
+* Add user options to data provider, in order to specify **`_id`** field name (duplicated as  **`id`** for react-admin) for some/all resources  
+
 ## v1.3.1
 * removed babel-jest from dependencies
 * Fix **`_id`** to **`id`** duplication 
