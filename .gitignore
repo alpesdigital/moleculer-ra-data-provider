@@ -1,4 +1,9 @@
 build/
 node_modules/
 coverage/
-README_dev
+/README_dev*
+/package-lock.json
+/yarn.lock
+/yarn-error.log
+.idea/
+
