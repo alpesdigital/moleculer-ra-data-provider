@@ -74,7 +74,7 @@ In case of create/update, the reverse operation is done: react-admin *{id:1, uui
 
 
 
-## Option renameFields
+## Option idFields
 
 You can specify the  **`_id`** field name (duplicated as  **`id`** for react-admin) for some/all resources
 
@@ -90,7 +90,7 @@ const dataProvider = moleculerDataProvider('http://localhost:13000/api', {idFiel
 ```
 
 
-Example 3: Combined renameFields and renameFields: **`trades.id2`** becomes **`trades.uuid`**, **`trades._id`** becomes **`trades.id2`**, in all other resources, use **`id2`** as db key (moleculer default is **`_id`**)
+Example 3: Combined renameFields and idFields: **`trades.id2`** becomes **`trades.uuid`**, **`trades._id`** becomes **`trades.id2`**, in all other resources, use **`id2`** as db key (moleculer default is **`_id`**)
 ```javascript
 //in app.js
 const dataProvider = moleculerDataProvider('http://localhost:13000/api', {renameFields: {"trades": {"id2":"uuid"} }, idFields: {"trades": "id2", "DEFAULT": "id1"  }});
