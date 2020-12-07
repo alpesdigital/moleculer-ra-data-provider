@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.0
+* Add renameFields options, allowing to rename **`id`** field name before it receives  **`_id`**
+* **`_id`** field name is renamed **`id`** when available (no longer duplicated)  
+
 ## v1.4.0
 * Add user options to data provider, in order to specify **`_id`** field name (duplicated as  **`id`** for react-admin) for some/all resources  
 

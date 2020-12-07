@@ -6,12 +6,22 @@ import {
   getList,
   getMany,
   getManyReference,
-  getOne, sort, updateOne
+  getOne,
+  sort,
+  unconvertIdField,
+  uncustomizeItemFields,
+  updateOne
 } from '../src/convertRequest'
-import { GET_ONE }  from '../src/const'
+import { GET_ONE } from '../src/const'
+import { getIdFieldName } from '../src/convertResponse'
 
 const API_URL = "http://dummy.api.url/"
 const RESOURCE = 'dummyResource'
+
+const EXISTING_ID_OPTIONS = {renameFields: { "dummyResource": {"id": "oid", "line":"row"} }}
+const TEST_DEFAULT_OPTIONS= { idFields : { "DEFAULT": "_id2"  } } ;
+
+
 
 describe('convertRequest', () => {
   beforeAll(() => {})
@@ -23,17 +33,53 @@ describe('convertRequest', () => {
     expect(options).toStrictEqual({method: 'DELETE'})
   })
 
+  it('uncustomizeItemFields', function () {
+    let un
+    un = uncustomizeItemFields({
+      oid: 'ABC',
+      str: 'string123',
+      num: 1234
+    }, RESOURCE, EXISTING_ID_OPTIONS)
+    expect(un).toStrictEqual( { id: "ABC", num:1234, str:"string123"})
+  })
+
+  it('unconvertIdField', function () {
+    let un
+    let idFieldName = getIdFieldName("xxx", TEST_DEFAULT_OPTIONS)
+    expect(idFieldName).toEqual("_id2")
+
+    un = unconvertIdField({
+      id: 12,
+      oid: 'ABC',
+      str: 'string123',
+      num: 1234
+    }, idFieldName )
+    expect(un).toStrictEqual( { _id2:12, oid: "ABC", num:1234, str:"string123"})
+
+    un = unconvertIdField({
+      id: 12,
+      oid: 'ABC',
+      str: 'string123',
+      num: 1234
+    }, "_id" )
+    expect(un).toStrictEqual( { _id:12, oid: "ABC", num:1234, str:"string123"})
+
+
+
+  })
+
   it('create', function () {
     const { url, options }  = createOne({
       data: {
+        oid : "ABC",
         str: 'string123',
         num: 1234
       }
-    }, API_URL, RESOURCE)
+    }, API_URL, RESOURCE, EXISTING_ID_OPTIONS)
     expect(url).toBe(API_URL + '/' + RESOURCE)
-    expect(options).toStrictEqual({
+    expect(options).toEqual({
       method: 'POST',
-      body: '{"str":"string123","num":1234}'
+      body: '{"str":"string123","num":1234,"id":"ABC"}'
     })
   })
 
@@ -131,11 +177,11 @@ describe('convertRequest', () => {
   it('update', function () {
     const { url, options } = updateOne({
       id: 1234,
-      data: { field1: 'f1', field2: ['f2a', 'f2b'] }
-    }, API_URL, RESOURCE)
+      data: {id: 1234, oid: "ABC", field1: 'f1', row: ['f2a', 'f2b'] }
+    }, API_URL, RESOURCE, EXISTING_ID_OPTIONS)
     expect(url).toEqual(API_URL + '/' + RESOURCE + '/' + '1234')
     expect(options).toStrictEqual({
-      body: '{"field1":"f1","field2":["f2a","f2b"]}',
+      body: '{"field1":"f1","_id":1234,"id":"ABC","line":["f2a","f2b"]}',
       method: 'PUT'
     })
   })
@@ -148,7 +194,7 @@ describe('convertRequest', () => {
   })
 
   it('convertRequest', function () {
-    const { url, options } = convertRequest(API_URL, GET_ONE, RESOURCE, { id: 1234})
+    const { url, options } = convertRequest(API_URL, GET_ONE, RESOURCE, { id: 1234}, {})
     expect(url).toEqual(API_URL + '/' + RESOURCE + '/' + '1234')
     expect(options).toStrictEqual({})
   })

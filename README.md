@@ -57,7 +57,24 @@ const App = () => (
 
 export default App;
 ```
-## Options
+## Option renameFields
+
+You can rename a field name in a resources.
+
+This is usefull when a moleculer service return both an  **`_id`** and an **`id`**.
+
+Example 1: the field **`id`** moleculer service 'trades' is renamed into  **`uuid`** (leaving the place for a copy of **`_id`**)
+```javascript
+//in app.js
+const dataProvider = moleculerDataProvider('http://localhost:13000/api', {renameFields: {"trades": {"id":"uuid"} }});
+```
+In this case, data provided (by moleculer) *{_id:1, id:"A"}* becomes (in react-admin) *{id:1, uuid:"A"}* 
+
+In case of create/update, the reverse operation is done: react-admin *{id:1, uuid:"B"}* becomes *{_id:1, id:"B"}* 
+
+
+
+## Option renameFields
 
 You can specify the  **`_id`** field name (duplicated as  **`id`** for react-admin) for some/all resources
 
@@ -71,6 +88,14 @@ Example 2: the moleculer service 'orders' is using **`uuid`** instead of **`_id`
 //in app.js
 const dataProvider = moleculerDataProvider('http://localhost:13000/api', {idFields: {"orders": "uuid", "DEFAULT": "myId"  }});
 ```
+
+
+Example 3: Combined renameFields and renameFields: **`trades.id2`** becomes **`trades.uuid`**, **`trades._id`** becomes **`trades.id2`**, in all other resources, use **`id2`** as db key (moleculer default is **`_id`**)
+```javascript
+//in app.js
+const dataProvider = moleculerDataProvider('http://localhost:13000/api', {renameFields: {"trades": {"id2":"uuid"} }, idFields: {"trades": "id2", "DEFAULT": "id1"  }});
+```
+
 
 ## Licence
 

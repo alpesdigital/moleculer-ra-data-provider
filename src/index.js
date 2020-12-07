@@ -50,7 +50,7 @@ export default (apiUrl, userOptions = {},  httpClient = fetchUtils.fetchJson) =>
       return { data: responses.map(response => response.json) }
     }
 
-    const { url, options } = convertRequest(apiUrl, type, resource, params)
+    const { url, options } = convertRequest(apiUrl, type, resource, params, userOptions)
 
     const response = await httpClient(url, options)
     return convertResponse(response, type, resource, params, userOptions)
