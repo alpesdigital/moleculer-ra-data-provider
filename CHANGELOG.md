@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.5.2
+* peer-dependency ra-core can have any version
+
 ## v1.5.0
 * Add renameFields options, allowing to rename **`id`** field name before it receives  **`_id`**
 * **`_id`** field name is renamed **`id`** when available (no longer duplicated)  

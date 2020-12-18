@@ -1,6 +1,6 @@
 {
   "name": "moleculer-ra-data-provider",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Moleculer.services data provider for react-admin",
   "main": "build/index.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "query-string": "^6.13.7"
   },
   "peerDependencies": {
-    "ra-core": "^2.9.9"
+    "ra-core": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
