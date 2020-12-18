@@ -12,7 +12,7 @@ import {
   uncustomizeItemFields,
   updateOne
 } from '../src/convertRequest'
-import { GET_ONE } from '../src/const'
+import { DELETE, GET_ONE, UPDATE } from '../src/const'
 import { getIdFieldName } from '../src/convertResponse'
 
 const API_URL = "http://dummy.api.url/"
@@ -193,11 +193,36 @@ describe('convertRequest', () => {
     expect(sort('fieldName', 'AnyOtherText')).toEqual('fieldName')
   })
 
-  it('convertRequest', function () {
-    const { url, options } = convertRequest(API_URL, GET_ONE, RESOURCE, { id: 1234}, {})
+  it('convertRequest Get', function () {
+    let { url, options } = convertRequest(API_URL, GET_ONE, RESOURCE, { id: 1234}, {})
     expect(url).toEqual(API_URL + '/' + RESOURCE + '/' + '1234')
     expect(options).toStrictEqual({})
   })
 
+  it('convertRequest Delete', function () {
+    let { url, options } = convertRequest(API_URL, DELETE, RESOURCE, { id: 1234}, {})
+    expect(url).toEqual(API_URL + '/' + RESOURCE + '/' + '1234')
+    expect(options).toStrictEqual({"method": "DELETE"})
+  })
+
+  it('convertRequest Update', function () {
+    let { url, options } = convertRequest(API_URL, UPDATE, RESOURCE, {
+      id: 1234,
+      data: {id: 1234, oid: "ABC", field1: 'f1', row: ['f2a', 'f2b'] }
+    }, EXISTING_ID_OPTIONS)
+    expect(url).toEqual(API_URL + '/' + RESOURCE + '/' + '1234')
+    expect(options).toStrictEqual({
+      body: '{"field1":"f1","_id":1234,"id":"ABC","line":["f2a","f2b"]}',
+      method: 'PUT'
+    })
+  })
+
+
+  it('convertRequest Exception', function () {
+    const test = () => {
+      convertRequest(API_URL, "UNKNOWN ORDER", RESOURCE, { id: 1234}, {})
+    };
+    expect(test).toThrow(Error);
+  })
 
 })
