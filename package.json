@@ -39,7 +39,7 @@
     "query-string": "^6.13.7"
   },
   "peerDependencies": {
-    "ra-core": "^2.9.9"
+    "ra-core": "^3.17.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
